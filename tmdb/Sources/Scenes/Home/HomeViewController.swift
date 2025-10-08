@@ -1,19 +1,15 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  tmdb
 //
 //  Created by Diogo on 08/10/2025.
 //
-
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-
+class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .red
     }
-
-
 }
-
