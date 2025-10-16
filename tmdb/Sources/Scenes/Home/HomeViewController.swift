@@ -23,6 +23,9 @@ class HomeViewController: UIViewController {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
         
+        // Registrar a célula customizada
+        contentView.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.reuseIdentifier)
+        
         setupConstraints()
     }
     private func setupConstraints(){
@@ -41,10 +44,11 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.reuseIdentifier, for: indexPath) as? MovieTableViewCell else {
+            return UITableViewCell()
+        }
         let movie = viewModel.movies[indexPath.row]
-        cell.textLabel?.text = movie.title
-        cell.detailTextLabel?.text = movie.overview
+        cell.configure(with: movie)
         return cell
     }
 }
@@ -52,3 +56,4 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     
 }
+
