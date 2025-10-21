@@ -62,6 +62,9 @@ class MovieTableViewCell: UITableViewCell {
         return stack
     }()
     
+    // Para evitar race conditions com reutilização de células
+    private var currentImageURL: URL?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -78,6 +81,13 @@ class MovieTableViewCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Limpa imagem e URL atual para evitar imagens trocadas
+        imagePoster.image = nil
+        currentImageURL = nil
     }
     
     private func setupViews() {
@@ -106,11 +116,22 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = movie.title
         overviewLabel.text = movie.overview.isEmpty ? "Sem descrição." : movie.overview
         
-        if let path = movie.posterPath, !path.isEmpty {
-            // imagePoster.image = ...
+        // Monta a URL do poster do TMDB (tamanho w500 é bem comum)
+        if let path = movie.posterPath, !path.isEmpty,
+           let url = URL(string: "https://image.tmdb.org/t/p/w500\(path)") {
+            currentImageURL = url
+            imagePoster.image = nil // opcional: placeholder
+            
+            ImageLoader.shared.load(url: url) { [weak self] image in
+                guard let self = self else { return }
+                // Garante que a resposta ainda corresponde a esta célula
+                if self.currentImageURL == url {
+                    self.imagePoster.image = image
+                }
+            }
         } else {
+            currentImageURL = nil
             imagePoster.image = nil
         }
     }
 }
-

@@ -15,6 +15,28 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        bindViewModel()
+        loadMovies()
+    }
+    
+    private func bindViewModel() {
+        viewModel.onMoviesUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.contentView.tableView.reloadData()
+            }
+        }
+        
+        viewModel.onError = { [weak self] error in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Erro", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
+            }
+        }
+    }
+    
+    private func loadMovies() {
+        viewModel.fetchMovies()
     }
     
     func setupView(){
@@ -23,11 +45,11 @@ class HomeViewController: UIViewController {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
         
-        // Registrar a célula customizada
         contentView.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.reuseIdentifier)
         
         setupConstraints()
     }
+    
     private func setupConstraints(){
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -56,4 +78,3 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     
 }
-

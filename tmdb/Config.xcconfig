@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  tmdb
+//
+//  Created by Diogo on 19/10/2025.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+TMDB_BEARER_TOKEN = eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMTg1NDY0NzY0NjNhYWQyMWZlYzgzOTMxYTk5NmQ4MSIsIm5iZiI6MTc1OTk1MzQxNi41NDMsInN1YiI6IjY4ZTZjMjA4MDQwNWRiNDIyZDVmNWU3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FJLdndjy2f1k9b4nRz-4N5i2Yxgv67Gx-yjlG-04Gns
