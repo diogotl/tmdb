@@ -5,7 +5,7 @@
 //  Created by Diogo on 09/10/2025.
 //
 
-struct Movie {
+struct Movie: Decodable {
     let id: Int
     let title: String
     let overview: String
