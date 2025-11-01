@@ -15,7 +15,6 @@ final class ImageLoader {
     
     private init(session: URLSession = .shared) {
         self.session = session
-        // Opcional: configurar limites de cache
         cache.countLimit = 500
         cache.totalCostLimit = 50 * 1024 * 1024 // ~50MB
     }
