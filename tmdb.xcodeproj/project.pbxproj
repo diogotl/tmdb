@@ -15,28 +15,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Sources/Coordinator.swift,
 			);
 			target = D951A6012E96FE0800940E90 /* tmdb */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		D951A6202E9703BC00940E90 /* Exceptions for "tmdb" folder in "Copy Bundle Resources" phase from "tmdb" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = D951A6002E96FE0800940E90 /* Resources */;
-			membershipExceptions = (
-				Sources/Coordinator.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D951A6042E96FE0800940E90 /* tmdb */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				D951A6142E96FE0900940E90 /* Exceptions for "tmdb" folder in "tmdb" target */,
-				D951A6202E9703BC00940E90 /* Exceptions for "tmdb" folder in "Copy Bundle Resources" phase from "tmdb" target */,
 			);
 			path = tmdb;
 			sourceTree = "<group>";
