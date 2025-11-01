@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HomeView:UIView {
+class HomeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,40 +19,27 @@ class HomeView:UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let homeTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false 
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        label.text = "Movies"
-        return label
-    }()
-    
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none // sem riscas
+        tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 72
         tableView.backgroundColor = .clear
         return tableView
     }()
     
-    func setupView(){
-        self.addSubview(homeTitleLabel)
-        self.addSubview(tableView)
+    func setupView() {
+        addSubview(tableView)
         setupConstraints()
     }
     
-    private func setupConstraints(){
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            homeTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            homeTitleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            
-            tableView.topAnchor.constraint(equalTo: homeTitleLabel.bottomAnchor, constant: 16),
-            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

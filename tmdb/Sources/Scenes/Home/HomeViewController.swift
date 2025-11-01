@@ -9,11 +9,32 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    let contentView = HomeView()
-    let viewModel = HomeViewModel()
+    let contentView: HomeView
+    let viewModel: HomeViewModel
+    let flowDelegate: HomeViewCoordinatorDelegate
+    
+    init(
+        contentView: HomeView,
+        viewModel: HomeViewModel,
+        flowDelegate: HomeViewCoordinatorDelegate
+    ) {
+        self.contentView = contentView
+        self.viewModel = viewModel
+        self.flowDelegate = flowDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Título via Navigation Bar (padrão do iOS)
+        navigationItem.title = "Movies"
+        // Se quiser large titles, descomente a linha abaixo:
+        // navigationController?.navigationBar.prefersLargeTitles = true
+        
         setupView()
         bindViewModel()
         loadMovies()
@@ -39,23 +60,23 @@ class HomeViewController: UIViewController {
         viewModel.fetchMovies()
     }
     
-    func setupView(){
-        self.view.addSubview(contentView)
+    func setupView() {
+        view.addSubview(contentView)
+        view.backgroundColor = .systemBackground
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        
         contentView.tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.reuseIdentifier)
         
         setupConstraints()
     }
     
-    private func setupConstraints(){
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            contentView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
@@ -76,5 +97,9 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 extension HomeViewController: UITableViewDelegate {
-    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = viewModel.movies[indexPath.row]
+        flowDelegate.navigateToMovieDetails(id: movie.id)
+    }
 }
+
